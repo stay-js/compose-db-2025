@@ -1,25 +1,32 @@
-networks:
-  database:
-
-volumes:
-  mysql:
+name: MySQL + PHPMyAdmin
 
 services:
-  db:
-    image: mysql:9.5.0
+  caddy:
+    image: caddy:2.10.2-alpine
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    ports:
+      - "80:80"
+    networks:
+      - database
     restart: unless-stopped
+
+  mysql:
+    image: mysql:9.5.0
+    volumes:
+      - mysql_data:/var/lib/mysql:rw
     environment:
       - TZ=${TZ}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    volumes:
-      - "mysql:/var/lib/mysql:rw"
     ports:
-      - 3306:3306
+      - "3306:3306"
     networks:
       - database
+    restart: unless-stopped
     healthcheck:
       test: '/usr/bin/mysql --user=root --password=$MYSQL_ROOT_PASSWORD --execute "SHOW DATABASES;"'
       timeout: 20s
@@ -27,16 +34,21 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5.2.3-apache
-    restart: unless-stopped
     depends_on:
-      db:
+      mysql:
         condition: service_healthy
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=${PMA_HOST}
       - PMA_PORT=${PMA_PORT}
       - UPLOAD_LIMIT=300M
-    ports:
-      - 8080:80
     networks:
       - database
+    restart: unless-stopped
+
+networks:
+  database: ~
+
+volumes:
+  caddy_data: ~
+  mysql_data: ~

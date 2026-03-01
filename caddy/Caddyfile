@@ -1,0 +1,3 @@
+http://pma.localhost {
+	reverse_proxy phpmyadmin:80
+}

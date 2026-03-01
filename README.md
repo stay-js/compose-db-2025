@@ -1,4 +1,4 @@
-# Adatbázis
+# MySQL + PHPMyAdmin
 
 ## Előkészületek
 
@@ -13,7 +13,13 @@ bash start.sh
 ## Leállítás
 
 ```bash
-docker compose down
+docker compose stop
+```
+
+## Eltávolítás
+
+```bash
+docker compose down # -v opcionális, a volume-ok törléséhez
 ```
 
 ## MySQL elérése
@@ -26,7 +32,7 @@ docker compose down
 
 ## PHPMyAdmin elérése
 
-- URL: <http://localhost:8080>
+- URL: <http://pma.localhost>
 - Szerver: üresen hagyható, amennyiben az `.env` fájlban meg van adva a `PMA_HOST` érték
 - Felhasználónév: a `.env` fájlban megadott `MYSQL_USER` érték
 - Jelszó: a `.env` fájlban megadott `MYSQL_PASSWORD` érték
