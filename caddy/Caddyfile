@@ -1,3 +1,3 @@
-http://pma.localhost {
+http://pma.localhost, http://pma.vm1.test, http://pma.vm2.test, http://pma.vm3.test, http://pma.vm4.test, http://pma.vm5.test, http://pma.vm6.test {
 	reverse_proxy phpmyadmin:80
 }

@@ -32,7 +32,7 @@ docker compose down # -v opcionális, a volume-ok törléséhez
 
 ## PHPMyAdmin elérése
 
-- URL: <http://pma.localhost>
+- URL: <http://pma.localhost> vagy <http://pma.vm1.test>-től <http://pma.vm6.test>-ig
 - Szerver: üresen hagyható, amennyiben az `.env` fájlban meg van adva a `PMA_HOST` érték
 - Felhasználónév: a `.env` fájlban megadott `MYSQL_USER` érték
 - Jelszó: a `.env` fájlban megadott `MYSQL_PASSWORD` érték
